@@ -10,8 +10,14 @@ type BrowserState struct {
 	history []*requestlog
 }
 
+func NewBroserState() *BrowserState {
+	this := new(BrowserState)
+	this.cookies = new(MemoryCookieStorage)
+	this.history = make([]*requestlog, 0)
+	return this
+}
 func (this *BrowserState) AddReqlog(req requestlog) {
-	this.history = append(req)
+	this.history = append(this.history, &req)
 }
 func (this *BrowserState) GetCookies() *MemoryCookieStorage {
 	return this.cookies
