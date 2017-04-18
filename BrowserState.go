@@ -3,7 +3,8 @@ package moenet
 import (
 	"encoding/json"
 	"fmt"
-	"net/url"
+
+	"strings"
 )
 
 type BrowserState struct {
@@ -24,11 +25,16 @@ func (this *BrowserState) AddReqlog(req requestlog) {
 func (this *BrowserState) GetCookies() *MemoryCookieStorage {
 	return this.cookies
 }
-func (this *BrowserState) NowUrl() *url.URL {
+func (this *BrowserState) LastHost() string {
 	if len(this.history) == 0 {
-		return nil
+		return ""
 	}
-	return this.history[len(this.history)-1].Requrl
+
+	host := this.history[len(this.history)-1].Requrl.Host
+	if strings.Contains(host, ":") {
+		host = host[:strings.Index(host, ":")]
+	}
+	return host
 }
 func (this *BrowserState) String() string {
 	var js map[string]interface{}
