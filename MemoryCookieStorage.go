@@ -18,7 +18,7 @@ func NewMemoryCookieStorage(cookies []*http.Cookie) (this *MemoryCookieStorage) 
 	}
 	return
 }
-func (this MemoryCookieStorage) SetCookies(u *url.URL, cookies []*http.Cookie) {
+func (this *MemoryCookieStorage) SetCookies(u *url.URL, cookies []*http.Cookie) {
 	if this.cookiedb == nil {
 		this.cookiedb = make(map[string]*http.Cookie)
 	}
@@ -34,7 +34,7 @@ func (this MemoryCookieStorage) SetCookies(u *url.URL, cookies []*http.Cookie) {
 
 }
 
-func (this MemoryCookieStorage) Cookies(u *url.URL) []*http.Cookie {
+func (this *MemoryCookieStorage) Cookies(u *url.URL) []*http.Cookie {
 	result := make([]*http.Cookie, 0)
 
 	for _, c := range this.cookiedb {
@@ -51,5 +51,16 @@ func (this MemoryCookieStorage) Cookies(u *url.URL) []*http.Cookie {
 			}
 		}
 	}
+	fmt.Println("当前所有", this.cookiedb, u, "使用cookie", result)
 	return result
+}
+func (this *MemoryCookieStorage) Cookie(key string) *http.Cookie {
+
+	for _, c := range this.cookiedb {
+		if key == c.Name {
+			return c
+		}
+	}
+
+	return nil
 }
