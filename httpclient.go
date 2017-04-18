@@ -17,8 +17,9 @@ func NewClient() *MoeClient {
 		Browser: *NewBroserState(),
 	}
 	mc.client.Jar = (mc.Browser.cookies)
-	mc.client.CheckRedirect = func(req *http.Request, via []*http.Request) {
+	mc.client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
 		mc.Browser.AddReqlog(NewReqlog(req.Method, req.URL.RequestURI()))
+		return nil
 	}
 	return mc
 }
