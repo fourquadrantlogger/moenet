@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-	c := moenet.MoeClient
+	c := moenet.NewClient()
 
-	fmt.Println(c.Get("http://localhost:9000/index"))
+	fmt.Println(c.Do("Get", "http://localhost:9000/index", nil))
 	//fmt.Println(http.DefaultClient.Get("http://localhost:9000/index"))
 	//c.Get("http://localhost:9000/relocation")
 }
