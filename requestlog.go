@@ -6,6 +6,15 @@ import (
 )
 
 type requestlog struct {
-	requrl *url.URL
-	t time.Time
+	Requrl *url.URL
+	T      time.Time
+}
+
+func NewReqlog(method, urlraw string) (this requestlog) {
+	u, _ := url.Parse(urlraw)
+	this = requestlog{
+		Requrl: u,
+		T:      time.Now(),
+	}
+	return
 }

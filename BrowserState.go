@@ -26,7 +26,7 @@ func (this *BrowserState) NowUrl() *url.URL {
 	if len(this.history) == 0 {
 		return nil
 	}
-	return this.history[len(this.history)-1].requrl
+	return this.history[len(this.history)-1].Requrl
 }
 func (this *BrowserState) String() string {
 	var js map[string]interface{}
