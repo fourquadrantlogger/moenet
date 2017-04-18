@@ -51,7 +51,7 @@ func (this *MemoryCookieStorage) Cookies(u *url.URL) []*http.Cookie {
 			}
 		}
 	}
-	fmt.Println("当前所有", this.cookiedb, u, "使用cookie", result)
+	fmt.Println(u, "当前所有", this.cookiedb, "使用cookie", result)
 	return result
 }
 func (this *MemoryCookieStorage) Cookie(key string) *http.Cookie {
