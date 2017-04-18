@@ -2,6 +2,7 @@ package moenet
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/url"
 )
 
@@ -18,6 +19,7 @@ func NewBroserState() *BrowserState {
 }
 func (this *BrowserState) AddReqlog(req requestlog) {
 	this.history = append(this.history, &req)
+	fmt.Println("reqlog", req)
 }
 func (this *BrowserState) GetCookies() *MemoryCookieStorage {
 	return this.cookies

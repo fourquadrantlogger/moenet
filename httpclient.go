@@ -29,6 +29,10 @@ func CopyClient(bs BrowserState) *MoeClient {
 		Browser: bs,
 	}
 	mc.client.Jar = (mc.Browser.cookies)
+	mc.client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
+		mc.Browser.AddReqlog(NewReqlog(req.Method, req.URL.RequestURI()))
+		return nil
+	}
 	return mc
 }
 
