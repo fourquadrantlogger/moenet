@@ -25,6 +25,17 @@ func (this *BrowserState) AddReqlog(req requestlog) {
 func (this *BrowserState) GetCookies() *MemoryCookieStorage {
 	return this.cookies
 }
+func (this *BrowserState) History() []*requestlog {
+	return this.history
+}
+func (this *BrowserState) LastReq() *requestlog {
+	if len(this.history) == 0 {
+		return nil
+	}
+
+	re := this.history[len(this.history)-1]
+	return re
+}
 func (this *BrowserState) LastHost() string {
 	if len(this.history) == 0 {
 		return ""
