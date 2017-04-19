@@ -2,25 +2,27 @@ package moenet
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"strings"
+	//"fmt"
 )
 
 type BrowserState struct {
 	cookies *MemoryCookieStorage
 	history []*requestlog
+	Obj     map[string]string
 }
 
 func NewBroserState() *BrowserState {
 	this := new(BrowserState)
 	this.cookies = new(MemoryCookieStorage)
 	this.history = make([]*requestlog, 0)
+	this.Obj = make(map[string]string)
 	return this
 }
 func (this *BrowserState) AddReqlog(req requestlog) {
 	this.history = append(this.history, &req)
-	fmt.Println("reqlog", req)
+
 }
 func (this *BrowserState) GetCookies() *MemoryCookieStorage {
 	return this.cookies

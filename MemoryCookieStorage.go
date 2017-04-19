@@ -1,7 +1,6 @@
 package moenet
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -24,11 +23,11 @@ func (this *MemoryCookieStorage) SetCookies(u *url.URL, cookies []*http.Cookie) 
 		this.cookiedb = make(map[string]*http.Cookie)
 	}
 	for _, c := range cookies {
-		v, has := this.cookiedb[c.Name]
+		_, has := this.cookiedb[c.Name]
 		if has {
-			fmt.Println(c.Name, "由", v.Value, "更新为", c.Value)
+			//fmt.Println(c.Name, "由", v.Value, "更新为", c.Value)
 		} else {
-			fmt.Println("新增", c.Name, "=", c.Value)
+			//fmt.Println("新增", c.Name, "=", c.Value)
 		}
 		if c.Value == "deleteMe" {
 			delete(this.cookiedb, c.Name)
@@ -62,7 +61,7 @@ func (this *MemoryCookieStorage) Cookies(u *url.URL) []*http.Cookie {
 	}
 
 	if u != nil {
-		fmt.Println(u.Host, "当前所有", this.cookiedb, "使用cookie", result)
+		//fmt.Println(u.Host, "当前所有", this.cookiedb, "使用cookie", result)
 	}
 	return result
 }
