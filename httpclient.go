@@ -16,7 +16,7 @@ func NewClient() *MoeClient {
 		client:  http.Client{},
 		Browser: *NewBroserState(),
 	}
-	mc.client.Jar = (mc.Browser.cookies)
+	mc.client.Jar = (mc.Browser.Cookies)
 	mc.client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
 		mc.Browser.AddReqlog(NewReqlog(req.Method, req.URL.String()))
 		return nil
@@ -28,7 +28,7 @@ func CopyClient(bs BrowserState) *MoeClient {
 		client:  http.Client{},
 		Browser: bs,
 	}
-	mc.client.Jar = (mc.Browser.cookies)
+	mc.client.Jar = (mc.Browser.Cookies)
 	mc.client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
 		mc.Browser.AddReqlog(NewReqlog(req.Method, req.URL.String()))
 		return nil
@@ -116,6 +116,6 @@ func (this *MoeClient) Do(req MoeReq) (resp *http.Response, e error) {
 	this.Browser.AddReqlog(NewReqlog(req.Method, req.urlraw))
 
 	resp, e = this.client.Do(httpreq)
-	this.Browser.cookies = NewMemoryCookieStorage(this.client.Jar.Cookies(nil))
+	this.Browser.Cookies = NewMemoryCookieStorage(this.client.Jar.Cookies(nil))
 	return
 }

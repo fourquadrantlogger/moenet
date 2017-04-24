@@ -7,32 +7,32 @@ import (
 )
 
 type MemoryCookieStorage struct {
-	cookiedb map[string]*http.Cookie
+	Cookiedb map[string]*http.Cookie
 }
 
 func NewMemoryCookieStorage(cookies []*http.Cookie) (this *MemoryCookieStorage) {
 	this = new(MemoryCookieStorage)
-	this.cookiedb = make(map[string]*http.Cookie)
+	this.Cookiedb = make(map[string]*http.Cookie)
 	for _, c := range cookies {
-		this.cookiedb[c.Name] = c
+		this.Cookiedb[c.Name] = c
 	}
 	return
 }
 func (this *MemoryCookieStorage) SetCookies(u *url.URL, cookies []*http.Cookie) {
-	if this.cookiedb == nil {
-		this.cookiedb = make(map[string]*http.Cookie)
+	if this.Cookiedb == nil {
+		this.Cookiedb = make(map[string]*http.Cookie)
 	}
 	for _, c := range cookies {
-		_, has := this.cookiedb[c.Name]
+		_, has := this.Cookiedb[c.Name]
 		if has {
 			//fmt.Println(c.Name, "由", v.Value, "更新为", c.Value)
 		} else {
 			//fmt.Println("新增", c.Name, "=", c.Value)
 		}
 		if c.Value == "deleteMe" {
-			delete(this.cookiedb, c.Name)
+			delete(this.Cookiedb, c.Name)
 		} else {
-			this.cookiedb[c.Name] = c
+			this.Cookiedb[c.Name] = c
 		}
 
 	}
@@ -42,7 +42,7 @@ func (this *MemoryCookieStorage) SetCookies(u *url.URL, cookies []*http.Cookie) 
 func (this *MemoryCookieStorage) Cookies(u *url.URL) []*http.Cookie {
 	result := make([]*http.Cookie, 0)
 
-	for _, c := range this.cookiedb {
+	for _, c := range this.Cookiedb {
 		if u == nil {
 			result = append(result, c)
 			continue
@@ -67,7 +67,7 @@ func (this *MemoryCookieStorage) Cookies(u *url.URL) []*http.Cookie {
 }
 func (this *MemoryCookieStorage) Cookie(key string) *http.Cookie {
 
-	for _, c := range this.cookiedb {
+	for _, c := range this.Cookiedb {
 		if key == c.Name {
 			return c
 		}

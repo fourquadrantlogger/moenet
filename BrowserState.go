@@ -8,56 +8,52 @@ import (
 )
 
 type BrowserState struct {
-	cookies *MemoryCookieStorage
-	history []*requestlog
-	Obj     map[string]string
+	Cookies *MemoryCookieStorage `json:"cookies"`
+	History []*requestlog        `json:"history"`
+	Obj     map[string]string    `json:"obj"`
 }
 
 func NewBroserState() *BrowserState {
 	this := new(BrowserState)
-	this.cookies = new(MemoryCookieStorage)
-	this.history = make([]*requestlog, 0)
+	this.Cookies = new(MemoryCookieStorage)
+	this.History = make([]*requestlog, 0)
 	this.Obj = make(map[string]string)
 	return this
 }
 func (this *BrowserState) AddReqlog(req requestlog) {
-	this.history = append(this.history, &req)
+	this.History = append(this.History, &req)
 
 }
 func (this *BrowserState) GetCookies() *MemoryCookieStorage {
-	return this.cookies
+	return this.Cookies
 }
-func (this *BrowserState) History() []*requestlog {
-	return this.history
-}
+
 func (this *BrowserState) LastReq() *requestlog {
-	if len(this.history) == 0 {
+	if len(this.History) == 0 {
 		return nil
 	}
 
-	re := this.history[len(this.history)-1]
+	re := this.History[len(this.History)-1]
 	return re
 }
 func (this *BrowserState) LastHost() string {
-	if len(this.history) == 0 {
+	if len(this.History) == 0 {
 		return ""
 	}
 
-	host := this.history[len(this.history)-1].Requrl.Host
+	host := this.History[len(this.History)-1].Requrl.Host
 	if strings.Contains(host, ":") {
 		host = host[:strings.Index(host, ":")]
 	}
 	return host
 }
-func (this *BrowserState) String() string {
-	var js map[string]interface{}
-	js["cookies"] = this.cookies
-	js["history"] = this.history
+func (this *BrowserState) Bytes() []byte {
 
-	bs, _ := json.Marshal(js)
-	return string(bs)
+	bs, _ := json.Marshal(this)
+	return bs
 }
-func ParseBrowserState(s string) (this *BrowserState) {
-	json.Unmarshal([]byte(s), this)
+func ParseBrowserState(s []byte) (this *BrowserState) {
+	this = new(BrowserState)
+	json.Unmarshal(s, this)
 	return
 }
